@@ -1,0 +1,73 @@
+package auto;
+//import tools for usage
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.awt.AWTException;
+import java.io.IOException;
+
+public class MainMethod {
+	
+	//setup webdriver for Google Chrome
+	
+	 static WebDriver driver = new ChromeDriver();
+	 static WebDriverWait wait = new WebDriverWait(driver, 30);
+				
+	public static void main(String[] args) throws IOException, InterruptedException, AWTException {
+		// TODO Auto-generated method stub
+		//creating and setting web driver for project
+		System.setProperty("webdriver.chrome.driver", "D:\\Program Files\\eclipse\\ZenergyProject\\chromedriver.exe");
+
+	
+			//calling my methods into main
+			itemsearch();
+			cart();
+			//going back to home and closing browser
+			driver.findElement(By.className("header-logo-img")).click();
+			Thread.sleep(2000);
+			driver.close();
+}
+	
+	public static void itemsearch (){
+		
+		System.setProperty("webdriver.chrome.driver", "D:\\Program Files\\eclipse\\ZenergyProject\\chromedriver.exe");
+		
+		//maximize browser window 
+	   	driver.manage().window().maximize();
+	  
+		//Method going to Newegg and item searching
+		driver.get("https://newegg.com/");
+		
+		//Waiting for certain elements to load before continuation and searching for laptops
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("haQuickSearchBox"))).sendKeys("laptop");;
+		driver.findElement(By.cssSelector("button.btn.btn-primary.btn-mini.search-bar-btn")).click();
+			
+	}
+	
+	public static void cart () throws InterruptedException, AWTException, IOException {
+		
+		System.setProperty("webdriver.chrome.driver", "D:\\Program Files\\eclipse\\ZenergyProject\\chromedriver.exe");
+	
+		//waiting and clicking on targeted laptop
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[title*='TOSHIBA Laptop Tecra A50-02H01S Intel Core i7 7th Gen 7500U (2.70 GHz) 8 GB Memory 256 GB M.2 SSD Intel HD Graphics 620 15.6\" Windows 10 Pro 64-Bit']")
+				)).click();
+	
+		
+		//Assigning the cart button to a webelement and clicking
+		WebElement button = driver.findElement(By.cssSelector("button.btn.btn-primary.btn-wide"));
+		button.click();
+		//Waiting for page to load
+		Thread.sleep(2000);
+		//Execute autoit script to close popup
+		//for the file path, you may want to change it to your own personal file path
+		Runtime.getRuntime().exec("D:\\Fue\\Documents\\Classes\\ISM 435\\move.exe");
+		Thread.sleep(5000);
+		Runtime.getRuntime().exec("D:\\Fue\\Documents\\Classes\\ISM 435\\move.exe");
+		Thread.sleep(3000);
+
+	}
+
+}
